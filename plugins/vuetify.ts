@@ -10,59 +10,93 @@ export default defineNuxtPlugin((nuxtApp) => {
     components,
     directives,
     ssr: true,
-   theme: {
+    theme: {
         defaultTheme: 'studioDark',
         themes: {
             studioDark: {
-            dark: true,
-            colors: {
-                background: '#0F0F0F',
-                surface: '#1A1A1A',
-                'surface-variant': '#242424',
+                dark: true,
+                colors: {
+                    background: '#0F0F0F',
+                    surface: '#1A1A1A',
+                    'surface-variant': '#242424',
 
-                'text-primary': '#FFFFFF',
-                'text-secondary': '#D1D5DB',
-                'text-muted': '#9CA3AF',
+                    bodyText: '#FFFFFF',
+                    bodyTextSecondary: '#D1D5DB',
+                    bodyTextMuted: '#9CA3AF',
 
-                primary: '#3B82F6',
-                secondary: '#3A3F45',
-                accent: '#F7F7F7',
+                    primary: '#3B82F6',
+                    secondary: '#3A3F45',
+                    accent: '#F7F7F7',
 
-                charcoal: '#1A1A1A',
-                offwhite: '#F7F7F7',
-                slate: '#3A3F45',
+                    charcoal: '#1A1A1A',
+                    offwhite: '#F7F7F7',
+                    slate: '#3A3F45',
 
-                success: '#22C55E',
-                warning: '#F59E0B',
-                error: '#EF4444',
-                info: '#3B82F6',
-            }
+                    success: '#22C55E',
+                    warning: '#F59E0B',
+                    error: '#EF4444',
+                    info: '#3B82F6',
+
+                    ideTabsBg: '#1E1E1E',
+                    ideTabsBgActive: '#2A2A2A',
+                    ideTabsBorderLight: 'rgba(255, 255, 255, 0.08)',
+                    ideTabsBorderDark: 'rgba(0, 0, 0, 0.4)',
+                    ideTabsText: 'rgba(255, 255, 255, 0.55)',
+                    ideTabsTextHover: 'rgba(255, 255, 255, 0.75)',
+                    ideTabsAccent: '#8FCEA5',
+
+                    codeBg: '#1E1E1E',
+                    codeKeyword: '#569CD6',
+                    codeString: '#CE9178',
+                    codeComment: '#6A9955',
+                    codePlain: '#D4D4D4',
+                    codeFunction: '#C586C0',
+                    codeComponent: '#4EC9B0',
+                    codeCaret: '#FFFFFF',
+                }
             },
 
             studioLight: {
-            dark: false,
-            colors: {
-                background: '#F7F7F7',
-                surface: '#FFFFFF',
-                'surface-variant': '#E5E7EB',
+                dark: false,
+                colors: {
+                    background: '#F7F7F7',
+                    surface: '#FFFFFF',
+                    'surface-variant': '#E5E7EB',
 
-                'text-primary': '#1A1A1A',
-                'text-secondary': '#374151',
-                'text-muted': '#6B7280',
+                    bodyText: '#1A1A1A',
+                    bodyTextSecondary: '#374151',
+                    bodyTextMuted: '#6B7280',
 
-                primary: '#3B82F6',
-                secondary: '#3A3F45',
-                accent: '#1A1A1A',
+                    primary: '#3B82F6',
+                    secondary: '#3A3F45',
+                    accent: '#1A1A1A',
 
-                charcoal: '#1A1A1A',
-                offwhite: '#F7F7F7',
-                slate: '#3A3F45',
+                    charcoal: '#1A1A1A',
+                    offwhite: '#F7F7F7',
+                    slate: '#3A3F45',
 
-                success: '#22C55E',
-                warning: '#F59E0B',
-                error: '#EF4444',
-                info: '#3B82F6',
-            }
+                    success: '#22C55E',
+                    warning: '#F59E0B',
+                    error: '#EF4444',
+                    info: '#3B82F6',
+
+                    ideTabsBg: '#F3F3F3',
+                    ideTabsBgActive: '#FFFFFF',
+                    ideTabsBorderLight: 'rgba(0, 0, 0, 0.1)',
+                    ideTabsBorderDark: 'rgba(0, 0, 0, 0.2)',
+                    ideTabsText: 'rgba(0, 0, 0, 0.65)',
+                    ideTabsTextHover: 'rgba(0, 0, 0, 0.85)',
+                    ideTabsAccent: '#3A8F63',
+
+                    codeBg: '#F8F8F8',
+                    codeKeyword: '#0000FF',
+                    codeString: '#A31515',
+                    codeComment: '#008000',
+                    codePlain: '#000000',
+                    codeFunction: '#795E26',
+                    codeComponent: '#267F99',
+                    codeCaret: '#000000',
+                }
             }
         }
     }                                                
