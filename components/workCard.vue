@@ -14,13 +14,13 @@
             @toggle="project.showBefore = !project.showBefore"
           />
           
-          <div v-else class="tech-abstract d-flex align-center justify-center pa-8 text-center">
-            <div>
-              <v-icon size="48" color="primary" class="mb-4">mdi-code-braces</v-icon>
-              <div class="text-h6 font-weight-bold text-bodyText">System Architecture</div>
-              <div class="text-caption text-bodyTextMuted">Case study visualization pending clearance</div>
-            </div>
-          </div>
+          <image-placeholder 
+            v-else 
+            height="400" 
+            :icon="project.icon || 'mdi-monitor-screenshot'" 
+            :label="project.category" 
+            :secondary-label="project.id" 
+          />
 
           <div class="commit-badge">
             <span class="text-primary mr-1">●</span> {{ project.commitCount }} COMMITS
