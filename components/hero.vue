@@ -1,111 +1,66 @@
 <template>
-  <section class="hero-section d-flex flex-column align-center justify-center">
-    
-    <div class="hero-content text-center mb-12">
-      <h2 class="text-overline text-primary mb-2 tracking-widest animate-fade-up">
-        ESTABLISHED 2026
-      </h2>
-      
-      <h1 class="hero-title animate-fade-up-delay-1">
-        Bespoke Digital <br />
-        <span class="text-outline">Craftsmanship.</span>
-      </h1>
-      
-      <p class="hero-subtitle text-bodyTextMuted mt-6 mx-auto animate-fade-up-delay-2">
-        We bridge the gap between complex engineering and <br class="d-none d-md-block" /> 
-        elegant design for forward-thinking brands.
-      </p>
-
-      <div class="mt-10 animate-fade-up-delay-3">
-        <v-btn
-          color="primary"
-          size="x-large"
-          rounded="full"
-          class="cta-btn px-10"
-          elevation="0"
-          to="/contact"
-        >
-          Start a Consultation
-          <v-icon end size="18">mdi-arrow-right</v-icon>
+  <v-container fluid class="pa-0">
+    <v-row no-gutters align="center" style="min-height: 85vh;">
+      <v-col cols="12" md="7" class="pa-6 pa-md-12">
+        <div class="text-primary font-weight-bold text-overline mb-3 tracking-widest">
+          ESTABLISHED 2026
+        </div>
+        <h1 class="hero-title font-weight-black mb-6">
+          BESPOKE DIGITAL <br />
+          <span class="hollow-text">CRAFTSMANSHIP</span>
+        </h1>
+        <p class="text-body-1 mb-10 hero-description">
+          Transforming complex requirements into high-performance web applications. 
+          Scalable, secure, and built for growth.
+        </p>
+        <v-btn color="primary" size="large" rounded="pill" class="px-10 font-weight-black shadow-primary">
+          START A CONSULTATION <v-icon end>mdi-arrow-right</v-icon>
         </v-btn>
-      </div>
-    </div>
+      </v-col>
 
-    <div class="editor-wrapper animate-float">
-      <editor-window />
-    </div>
-
-  </section>
+      <v-col cols="12" md="5" class="d-none d-md-flex justify-center position-relative">
+        <NuxtImg 
+          src="/hero.png" 
+          width="600"
+          preload
+          class="hero-img"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { heroContent } from '@/data/hero';
+const content = heroContent;
 </script>
+
 <style scoped>
-.hero-section {
-  min-height: 90vh;
-  padding: 80px 24px;
-  position: relative;
-  overflow: hidden;
+.hero-title { 
+  font-size: clamp(2.5rem, 6vw, 5rem); 
+  line-height: 0.85; 
+  letter-spacing: -0.03em;
+  color: rgb(var(--v-theme-bodyText));
 }
 
-.hero-title {
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  line-height: 0.95;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+.hollow-text { 
+  -webkit-text-stroke: 1.5px rgb(var(--v-theme-bodyText)); 
+  color: transparent; 
 }
 
-.text-outline {
-  -webkit-text-stroke: 1px rgb(var(--v-theme-primary));
-  color: transparent;
+.hero-description {
+  max-width: 500px;
+  color: rgb(var(--v-theme-bodyTextSecondary));
 }
 
-.hero-subtitle {
-  font-size: 1.25rem;
-  max-width: 650px;
-  line-height: 1.6;
+.hero-img {
+  /* Removed saturation/brightness filters that make it look muddy in light mode */
+  transform: perspective(1000px) rotateY(-10deg);
+  /* Added a subtle floating drop shadow instead of a mask */
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.1));
 }
 
-.tracking-widest {
-  letter-spacing: 0.4em !important;
-}
-
-/* Boutique Button Styling */
-.cta-btn {
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  font-size: 0.85rem;
-  border: 1px solid rgba(var(--v-theme-primary), 0.5);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(var(--v-theme-primary), 0.2);
-}
-
-/* Entrance Animations */
-.animate-fade-up {
-  animation: fadeUp 0.8s ease-out forwards;
-}
-.animate-fade-up-delay-1 { animation: fadeUp 0.8s ease-out 0.2s forwards; opacity: 0; }
-.animate-fade-up-delay-2 { animation: fadeUp 0.8s ease-out 0.4s forwards; opacity: 0; }
-.animate-fade-up-delay-3 { animation: fadeUp 0.8s ease-out 0.6s forwards; opacity: 0; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Subtle float for the editor to make it feel "3D" */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+.v-theme--studioDark .hero-img {
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
 }
 </style>
