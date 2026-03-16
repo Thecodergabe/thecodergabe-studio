@@ -6,7 +6,7 @@
       elevation="24"
     >
       <editor-tabs
-        :activeTab="activeTab"
+        :active-tab="activeTab"
         @change="activeTab = $event"
       />
 
@@ -40,9 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { editorFiles } from './editorFileData'
-import codeViewer from './codeViewer.vue'
+import { editorFiles } from '../../data/editorFileData'
+import CodeViewer from './codeViewer.vue'
 const mounted = ref(false)
 const activeTab = ref<'studio' | 'home'>('studio')
 
@@ -63,22 +62,24 @@ onMounted(() => {
   border: 1px solid rgba(var(--v-theme-primary), 0.1);
   border-radius: 16px !important;
   overflow: hidden;
-  /* Thin "shine" on the top edge */
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  /* Architectural depth */
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 
+              0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
 }
 
 .editor-body {
   background: rgb(var(--v-theme-codeBg)) !important;
-  height: 400px; /* Increased height for better proportions */
+  height: 400px; 
   overflow-y: auto;
-  /* Custom scrollbar to keep the "Studio" feel */
+  overflow-x: hidden; /* Prevent horizontal breakages */
 }
 
+/* Custom scrollbar to keep the "Studio" feel */
 .editor-body::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 .editor-body::-webkit-scrollbar-thumb {
-  background: rgba(var(--v-theme-primary), 0.1);
+  background: rgba(var(--v-theme-primary), 0.15);
   border-radius: 10px;
 }
 
@@ -89,11 +90,15 @@ onMounted(() => {
   font-size: 10px;
   color: rgb(var(--v-theme-bodyTextMuted));
   border-top: 1px solid rgba(255, 255, 255, 0.03);
+  user-select: none;
 }
 
 @media (max-width: 600px) {
   .editor-window {
     margin-inline: 12px;
+  }
+  .editor-body {
+    height: 320px; /* Tighter for mobile viewports */
   }
 }
 </style>

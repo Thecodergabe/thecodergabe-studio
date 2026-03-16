@@ -36,7 +36,7 @@ export const projects: Project[] = [
     ],
     tags: ['Nuxt 3', 'TypeScript', 'Performance'],
     url: 'https://www.pointstire.com/everettstreet/tire-listing?front=185/65R15&make=Kia&year=2021&model=Rio&trim=15,%20LX',
-    featured: true
+    featured: false
   },
   { 
     id: 'alltrac-vue',
@@ -55,5 +55,24 @@ export const projects: Project[] = [
     tags: ['Vue 3', 'SignalR', 'Internal Tools'],
     url: '#', // Placeholder since this is an internal system,
     featured: false
-  }
+  },
+  {
+    id: 'loan-estimate-tool',
+    title: 'Geo-Financial Mortgage Engine',
+    category: 'Fintech / Data Engineering',
+    image: '/loan_preview.png',
+    showBefore: false,
+    commitCount: '33', 
+    icon: 'mdi-calculator-variant',
+    description: 'A high-precision mortgage forecasting tool that bypasses generic averages by injecting ZIP-level property tax and insurance data scraped from national databases.',
+    highlights: [
+      'Automated ETL pipeline via Cheerio and XLSX',
+      'ZIP-to-County normalization for 40,000+ regions',
+      'Custom dependency-free PDF generation engine',
+      'Reactive state management for real-time math'
+    ],
+    tags: ['Nuxt 3', 'Data Scraping', 'Financial Modeling'],
+    url: 'https://www.loanestimatetool.com/',
+    featured: true
+  },
 ];

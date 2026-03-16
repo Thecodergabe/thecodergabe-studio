@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { experienceData } from '@/data/experience';
-</script>
-
 <template>
   <v-container class="py-16">
     <h2 class="text-h4 text-md-h3 font-weight-black uppercase-title mb-12">Experience</h2>
@@ -54,6 +50,10 @@ import { experienceData } from '@/data/experience';
     </v-timeline>
   </v-container>
 </template>
+
+<script setup lang="ts">
+  import { experienceData } from '@/data/experience';
+</script>
 
 <style scoped>
 .uppercase-title { font-family: 'Syne', sans-serif; }

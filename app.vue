@@ -12,15 +12,15 @@
 </template>
 
 <script setup lang="ts">
-import '@/assets/styles/variables.scss'
-import '@/assets/styles/utilities.scss'
-// Inside your page or nuxt.config.ts
-useSeoMeta({
-  title: 'TheCoderGabe Studio | Lead UI Architect & Vue Expert',
-  ogTitle: 'TheCoderGabe Studio | Engineering High-Performance Digital Experiences',
-  description: 'Specializing in Vue 3, Nuxt, and enterprise-grade frontend systems. Building modular, pixel-perfect UI for high-velocity teams.',
-  ogDescription: 'Lead UI Architect specializing in enterprise logic and boutique design.',
-  ogImage: '/og-image.png', // Create a 1200x630 share image
-  twitterCard: 'summary_large_image',
-})
+  import '@/assets/styles/variables.scss'
+  import '@/assets/styles/utilities.scss'
+  useSeoMeta({
+    title: 'TheCoderGabe Studio | Lead UI Architect',
+    ogTitle: 'TheCoderGabe Studio | Engineering High-Performance Vue Ecosystems',
+    description: 'Senior UI Architect specializing in Vue 3, Nuxt, and Enterprise Design Systems. 8,000+ production commits of high-velocity execution.',
+    ogDescription: 'Lead UI Architect specializing in enterprise logic, boutique design, and high-performance Vue 3 environments.',
+    ogImage: '/og-image.png',
+    twitterCard: 'summary_large_image',
+    ogUrl: 'https://thecodergabe.com',
+  })
 </script>

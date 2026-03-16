@@ -7,25 +7,46 @@
             variant="outlined"
             color="success"
             size="small"
-            class="text-caption font-weight-bold px-4"
-            style="letter-spacing: 1px;"
+            class="status-chip text-caption font-weight-bold px-4 tracking-widest"
           >
-            ● AVAILABLE FOR NEW PROJECTS
+            <span class="pulse-dot mr-2">●</span> AVAILABLE FOR NEW PROJECTS
           </v-chip>
         </v-col>
 
         <v-col cols="12" md="6" class="text-center text-md-left">
-          <div class="text-subtitle-2 font-weight-black mb-1">THECODERGABE <span class="text-grey-darken-1">STUDIO</span></div>
+          <div class="text-subtitle-2 font-weight-black mb-1 text-uppercase">
+            THECODERGABE <span class="text-grey-darken-1">STUDIO</span>
+          </div>
           <div class="text-caption text-grey">
-            © {{ new Date().getFullYear() }} — ALL RIGHTS RESERVED
+            © 2026 — ALL RIGHTS RESERVED
           </div>
         </v-col>
 
         <v-col cols="12" md="6" class="text-center text-md-right">
           <div class="d-flex justify-center justify-md-end ga-2">
-            <v-btn icon="mdi-github" variant="text" size="small" color="grey-lighten-1" href="https://github.com/thecodergabe"></v-btn>
-            <v-btn icon="mdi-linkedin" variant="text" size="small" color="grey-lighten-1" href="#"></v-btn>
-            <v-btn icon="mdi-email-outline" variant="text" size="small" color="grey-lighten-1" href="#"></v-btn>
+            <v-btn 
+              icon="mdi-github" 
+              variant="text" 
+              size="small" 
+              color="grey-lighten-1" 
+              href="https://github.com/thecodergabe" 
+              target="_blank" 
+            />
+            <v-btn 
+              icon="mdi-linkedin" 
+              variant="text" 
+              size="small" 
+              color="grey-lighten-1" 
+              href="https://www.linkedin.com/in/thecodergabe-connect" 
+              target="_blank" 
+            />
+            <v-btn 
+              icon="mdi-email-outline" 
+              variant="text" 
+              size="small" 
+              color="grey-lighten-1" 
+              href="mailto:thecodergabe@outlook.com" 
+            />
           </div>
         </v-col>
       </v-row>
@@ -33,12 +54,37 @@
   </v-footer>
 </template>
 
+<script setup lang="ts">
+/**
+ * Footer Component
+ * Static year used for architectural consistency in Studio 2026.
+ */
+</script>
+
 <style scoped>
 .border-t-thin {
   border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
-/* Ensure icons don't get too small on mobile */
+.tracking-widest {
+  letter-spacing: 1px;
+}
+
+.pulse-dot {
+  animation: pulse 2.5s infinite cubic-bezier(0.45, 0, 0.55, 1);
+  display: inline-block;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.9); }
+}
+
+.status-chip {
+  border-color: rgba(var(--v-theme-success), 0.2) !important;
+  background: rgba(var(--v-theme-success), 0.02);
+}
+
 @media (max-width: 600px) {
   .v-btn--icon.v-btn--size-small {
     width: 44px;

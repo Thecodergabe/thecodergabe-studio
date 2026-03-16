@@ -88,7 +88,7 @@
                 target="_blank" 
                 class="text-none font-weight-bold"
               >
-                VIEW LIVE PROJECT
+                VIEW PROJECT
                 <v-icon end size="small" class="ml-2">mdi-open-in-new</v-icon>
               </v-btn>
             </v-card>

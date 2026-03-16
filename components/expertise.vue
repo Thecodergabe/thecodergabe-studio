@@ -1,54 +1,87 @@
 <template>
-  <v-container id="expertise" class="py-16">
-    <v-row align="center" justify="center">
-      <v-col cols="12" md="5" class="mb-8 mb-md-0">
-        <div class="text-overline text-primary font-weight-bold mb-4 tracking-widest">
-          TECHNICAL STACK
-        </div>
-        <h2 class="text-h3 font-weight-black mb-6 heading-style">
-          ENTERPRISE <span class="text-primary">LOGIC.</span><br />
-          BOUTIQUE <span class="text-outline">UI.</span>
+  <v-container class="py-16">
+    <v-row align="center">
+      <v-col cols="12" md="5" class="pr-md-12">
+        <div class="category-tag mb-4">Core Expertise</div>
+        <h2 class="text-h3 font-weight-black mb-6 uppercase-syne">
+          Engineering <br />
+          <span class="text-primary">Architecture</span>
         </h2>
-        <p class="text-body-1 text-bodyTextSecondary max-width-p">
-          Specializing in the modernization of complex ecosystems. I bridge the gap 
-          between high-velocity delivery and pixel-perfect design.
-        </p>
+        
+        <v-list bg-color="transparent" class="ga-4">
+          <v-list-item
+            v-for="(skill, i) in skills"
+            :key="i"
+            class="pa-0"
+          >
+            <template #prepend>
+              <v-icon color="primary" class="mr-3">mdi-check-circle-outline</v-icon>
+            </template>
+            <v-list-item-title class="font-weight-bold">{{ skill.title }}</v-list-item-title>
+            <v-list-item-subtitle>{{ skill.desc }}</v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
       </v-col>
 
-      <v-col cols="12" md="7">
-        <expertise-ide />
+      <v-col cols="12" md="7" class="mt-10 mt-md-0">
+        <div class="editor-wrapper">
+          <editor-window />
+        </div>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import expertiseIde from './expertiseIde.vue'
+/**
+ * Expertise Component
+ * Merges the static skills list with the interactive Editor Window.
+ */
+const skills = [
+  { 
+    title: 'Frontend Architecture', 
+    desc: 'Scalable Vue 3/Nuxt systems with modular design patterns.' 
+  },
+  { 
+    title: 'Performance Optimization', 
+    desc: 'Core Web Vitals focused engineering with efficient state management.' 
+  },
+  { 
+    title: 'Cloud Solutions', 
+    desc: 'Serverless deployments and secure API orchestration.' 
+  }
+]
 </script>
 
 <style scoped>
-.heading-style {
-  line-height: 1;
-  font-family: 'Inter', sans-serif;
-  letter-spacing: -2px;
-  /* Ensure title is high contrast */
-  color: rgb(var(--v-theme-bodyText));
+.uppercase-syne {
+  font-family: 'Syne', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  line-height: 1.1;
 }
 
-.text-outline {
-  /* Using bodyText for the stroke ensures visibility in both Light/Dark modes */
-  -webkit-text-stroke: 1.5px rgb(var(--v-theme-bodyText));
-  color: transparent;
+.category-tag {
+  color: rgb(var(--v-theme-primary));
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
 }
 
-.max-width-p {
-  max-width: 450px;
-  line-height: 1.6;
+.editor-wrapper {
+  /* Subtle perspective to make the IDE feel more "physical" in the section */
+  transform: perspective(2000px) rotateY(-5deg);
+  transition: transform 0.5s ease;
+}
+
+.editor-wrapper:hover {
+  transform: perspective(2000px) rotateY(0deg);
 }
 
 @media (max-width: 960px) {
-  .heading-style {
-    font-size: 2.5rem !important;
+  .editor-wrapper {
+    transform: none;
   }
 }
 </style>

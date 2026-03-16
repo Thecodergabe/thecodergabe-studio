@@ -12,4 +12,5 @@ export interface Project {
   url: string;
   icon?: string;
   featured: boolean;
+  archLabel?: string; // Adding this fixes the TS error
 }

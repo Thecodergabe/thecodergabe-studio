@@ -3,55 +3,63 @@
     flat 
     class="studio-header px-4 px-md-12"
     height="80"
-    fixed
   >
-    <div class="d-flex align-center" style="min-width: 280px;">
-      <div class="logo-text">
-        THECODERGABE <span class="logo-accent">STUDIO</span>
-      </div>
-    </div>
+    <v-container class="pa-0 d-flex align-center fill-height" fluid>
+      <nuxt-link to="/" class="logo-link d-flex align-center">
+        <div class="logo-text">
+          THECODERGABE <span class="logo-accent d-none d-sm-inline">STUDIO</span>
+        </div>
+      </nuxt-link>
 
-    <v-spacer />
+      <v-spacer />
 
-    <div class="d-none d-md-flex align-center">
-      <nav class="d-flex align-center ga-6">
-        <nuxt-link 
-          v-for="item in menuItems" 
-          :key="item.title" 
-          :to="item.path" 
-          class="nav-link"
+      <div class="d-none d-md-flex align-center">
+        <nav class="d-flex align-center ga-8">
+          <nuxt-link 
+            v-for="item in menuItems" 
+            :key="item.title" 
+            :to="item.path" 
+            class="nav-link"
+          >
+            {{ item.title }}
+          </nuxt-link>
+        </nav>
+
+        <div class="nav-divider mx-6" />
+
+        <v-btn
+          icon
+          variant="tonal"
+          size="small"
+          class="theme-toggle-btn"
+          @click="handleThemeToggle"
         >
-          {{ item.title }}
-        </nuxt-link>
-      </nav>
+          <v-icon size="18">
+            {{ isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' }}
+          </v-icon>
+        </v-btn>
+      </div>
 
-      <div class="nav-divider mx-6"></div>
-
-      <v-btn
-        icon
-        variant="tonal"
-        size="small"
-        class="theme-toggle-btn"
-        @click="handleThemeToggle"
-      >
-        <v-icon size="18">
-          {{ isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' }}
-        </v-icon>
-      </v-btn>
-    </div>
-
-    <v-btn 
-      icon="mdi-menu-variant" 
-      variant="text"
-      class="d-md-none mobile-btn" 
-      @click="sheet = true"
-    />
+      <v-btn 
+        icon="mdi-menu" 
+        variant="text"
+        size="large"
+        class="d-md-none mobile-btn" 
+        @click="sheet = true"
+      />
+    </v-container>
 
     <v-bottom-sheet v-model="sheet" fullscreen transition="dialog-bottom-transition">
-      <v-card class="mobile-sheet-card">
-        <v-btn icon="mdi-close" variant="text" class="close-btn" @click="sheet = false" />
+      <v-card class="mobile-sheet-card border-none">
+        <v-btn 
+          icon="mdi-close" 
+          variant="tonal" 
+          class="close-btn" 
+          @click="sheet = false" 
+        />
+        
         <v-container class="fill-height d-flex flex-column justify-center align-center">
-          <nav class="d-flex flex-column ga-10 text-center">
+          <nav class="d-flex flex-column ga-8 text-center">
             <nuxt-link 
               v-for="item in menuItems" 
               :key="item.title" 
@@ -61,6 +69,15 @@
             >
               {{ item.title }}
             </nuxt-link>
+            
+            <v-btn
+              variant="outlined"
+              color="primary"
+              class="mt-4 rounded-pill font-weight-black"
+              @click="handleThemeToggle"
+            >
+              {{ isDark ? 'LIGHT' : 'DARK' }} MODE
+            </v-btn>
           </nav>
         </v-container>
       </v-card>
@@ -69,7 +86,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import { useTheme } from 'vuetify'
 import { navItems } from '@/data/navigation'
 
@@ -78,6 +94,7 @@ const sheet = ref(false)
 const menuItems = navItems
 
 const isDark = computed(() => theme.global.current.value.dark)
+
 const handleThemeToggle = () => {
   theme.global.name.value = isDark.value ? 'studioLight' : 'studioDark'
 }
@@ -91,27 +108,32 @@ const handleThemeToggle = () => {
   z-index: 1000;
 }
 
+.logo-link {
+  text-decoration: none;
+}
+
 .logo-text {
-  font-family: 'Inter', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: rgb(var(--v-theme-primary));
-  white-space: nowrap;
+  letter-spacing: 1px;
 }
 
 .logo-accent {
   font-weight: 300;
-  color: rgb(var(--v-theme-bodyTextMuted));
+  color: rgb(var(--v-theme-on-background));
+  opacity: 0.6;
 }
 
 .nav-link {
   text-decoration: none;
-  color: rgb(var(--v-theme-bodyTextSecondary));
-  font-size: 0.75rem;
+  color: rgb(var(--v-theme-on-background));
+  font-size: 0.7rem;
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover, .router-link-active {
@@ -120,24 +142,35 @@ const handleThemeToggle = () => {
 
 .nav-divider {
   width: 1px;
-  height: 20px;
-  background: rgba(var(--v-theme-primary), 0.2);
+  height: 16px;
+  background: rgba(var(--v-theme-primary), 0.15);
 }
 
-.theme-toggle-btn, .mobile-btn {
+.theme-toggle-btn {
   color: rgb(var(--v-theme-primary)) !important;
 }
 
-.mobile-sheet-card { background: rgb(var(--v-theme-background)) !important; }
-
-.mobile-nav-link {
-  font-size: 3rem;
-  text-decoration: none;
-  font-weight: 900;
-  color: rgb(var(--v-theme-bodyText));
-  text-transform: uppercase;
-  font-family: 'Syne', sans-serif;
+.mobile-btn {
+  color: rgb(var(--v-theme-primary)) !important;
 }
 
-.close-btn { position: absolute; top: 24px; right: 24px; color: rgb(var(--v-theme-primary)) !important; }
+.mobile-sheet-card { 
+  background: rgb(var(--v-theme-background)) !important; 
+}
+
+.mobile-nav-link {
+  font-size: 2.5rem;
+  text-decoration: none;
+  font-weight: 900;
+  color: rgb(var(--v-theme-on-background));
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.close-btn { 
+  position: absolute; 
+  top: 24px; 
+  right: 24px; 
+  z-index: 10;
+}
 </style>

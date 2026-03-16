@@ -2,7 +2,7 @@
   <v-container class="py-8 py-md-16">
     <div class="d-flex align-center mb-12">
       <h2 class="text-h4 text-md-h3 font-weight-black uppercase-title">
-        Featured Case Studies
+        Featured <span class="text-primary">Case Studies</span>
       </h2>
     </div>
 
@@ -14,21 +14,29 @@
     />
 
     <div class="text-center mt-12">
-      <v-btn to="/work" variant="text" color="primary" class="font-weight-black">
-        SEE ALL PROJECTS <v-icon end px-2>mdi-arrow-right</v-icon>
+      <v-btn 
+        to="/work" 
+        variant="text" 
+        color="primary" 
+        class="font-weight-black tracking-widest"
+      >
+        SEE ALL PROJECTS 
+        <v-icon end size="20" class="ms-2">mdi-arrow-right</v-icon>
       </v-btn>
     </div>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import WorkCard from './workCard.vue'
 import { projects } from '@/data/projects'
-import { computed } from 'vue'
 
-// Keep the clean filtering logic, but use it with your working UI component
+/**
+ * Featured Projects Logic
+ * Filters the central data store for 'featured' flags.
+ * Limit set to 2 for the homepage bento/alternating layout.
+ */
 const featuredProjects = computed(() => 
-  projects.filter(p => p.featured).slice(0, 2)
+  projects.filter(p => p.featured)
 )
 </script>
 
@@ -36,5 +44,16 @@ const featuredProjects = computed(() =>
 .uppercase-title {
   text-transform: uppercase;
   letter-spacing: 2px;
+  /* Ensuring the header matches the "Selected Works" weight from the index */
+  line-height: 1.2;
+}
+
+.tracking-widest {
+  letter-spacing: 0.15em !important;
+}
+
+/* Add a subtle divider between the featured section and footer if needed */
+.v-container {
+  position: relative;
 }
 </style>

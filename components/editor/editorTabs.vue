@@ -14,21 +14,26 @@
         :class="{ active: key === activeTab }"
         @click="$emit('change', key)"
       >
-        <v-icon size="14" :color="key === activeTab ? 'primary' : ''">
+        <v-icon 
+          size="14" 
+          :color="key === activeTab ? 'ideTabsAccent' : 'ideTabsText'"
+        >
           {{ file.name.endsWith('.ts') ? 'mdi-language-typescript' : 'mdi-vuejs' }}
         </v-icon>
-        {{ file.name }}
+        <span class="tab-text">{{ file.name }}</span>
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { editorFiles } from './editorFileData'
+import { editorFiles } from '../../data/editorFileData'
 
 defineProps<{
   activeTab: string
 }>()
+
+defineEmits(['change'])
 
 const files = Object.entries(editorFiles)
 </script>
@@ -36,8 +41,8 @@ const files = Object.entries(editorFiles)
 <style scoped>
 .tabs-container {
   height: 45px;
-  background: rgb(var(--v-theme-surface-variant));
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgb(var(--v-theme-ideTabsBg));
+  border-bottom: 1px solid rgb(var(--v-theme-ideTabsBorderDark));
 }
 
 .control-dot {
@@ -54,21 +59,26 @@ const files = Object.entries(editorFiles)
   padding: 0 20px;
   font-family: 'Inter', sans-serif;
   font-size: 12px;
-  color: rgb(var(--v-theme-bodyTextMuted));
+  color: rgb(var(--v-theme-ideTabsText));
   background: transparent;
   border: none;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgb(var(--v-theme-ideTabsBorderLight));
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.tab-item.active {
-  background: rgb(var(--v-theme-codeBg));
-  color: rgb(var(--v-theme-primary));
-  /* Top highlight bar on the active tab */
-  box-shadow: inset 0 2px 0 rgb(var(--v-theme-primary));
+.tab-item:hover {
+  color: rgb(var(--v-theme-ideTabsTextHover));
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
+.tab-item.active {
+  background: rgb(var(--v-theme-ideTabsBgActive));
+  color: rgb(var(--v-theme-bodyText));
+  box-shadow: inset 0 2px 0 rgb(var(--v-theme-ideTabsAccent));
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 </style>

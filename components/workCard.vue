@@ -1,151 +1,101 @@
 <template>
-  <v-card variant="flat" class="project-card mb-12 mb-md-16 bg-transparent">
-    <v-row :class="{ 'flex-row-reverse': isEven && $vuetify.display.mdAndUp }" align="center">
-      
-      <v-col cols="12" md="7">
-        <div class="visual-wrapper rounded-xl overflow-hidden border-thin elevation-12">
-          <browser-mockup 
-            v-if="project.image"
-            :image="project.image"
-            :image-before="project.imageBefore"
-            :url="project.url"
-            :alt="`${project.title} interface design by TheCoderGabe`"
-            :show-before="project.showBefore"
-            @toggle="project.showBefore = !project.showBefore"
-          />
-          
-          <image-placeholder 
-            v-else 
-            height="400" 
-            :icon="project.icon || 'mdi-monitor-screenshot'" 
-            :label="project.category" 
-            :secondary-label="project.id" 
-          />
+  <v-row 
+    class="mb-16 align-center" 
+    :class="{ 'flex-row-reverse': !isEven }"
+  >
+    <v-col cols="12" md="7" class="media-col">
+      <div class="media-container d-flex flex-column">
+        <browser-mockup 
+          v-if="project.image"
+          :image="project.image"
+          :image-before="project.imageBefore"
+          :url="project.url"
+          :show-before="project.showBefore"
+          class="h-100"
+          @toggle="$emit('toggle', project.id)"
+        />
 
-          <div class="commit-badge">
-            <span class="text-primary mr-1">●</span> {{ project.commitCount }} COMMITS
-          </div>
-        </div>
-      </v-col>
-
-      <v-col cols="12" md="5" :class="isEven ? 'ps-md-12' : 'pe-md-12'" class="mt-6 mt-md-0">
-        <div class="category-tag mb-2">
-          {{ project.category }}
-        </div>
-        
-        <h3 class="project-title mb-4">
-          {{ project.title }}
-        </h3>
-        
-        <p class="project-description mb-6">
-          {{ project.description }}
-        </p>
-        
-        <div class="d-flex ga-2 flex-wrap mb-8">
-          <v-chip 
-            v-for="tag in project.tags" 
-            :key="tag" 
-            size="small" 
-            variant="tonal" 
-            color="primary"
-            class="font-weight-bold rounded-sm"
-          >
-            {{ tag }}
-          </v-chip>
-        </div>
-
-        <v-btn 
-          variant="outlined" 
-          color="primary" 
-          class="rounded-pill px-8 text-none font-weight-bold" 
-          :href="project.url"
-          border="sm"
+        <image-placeholder 
+          v-else 
+          :icon="project.icon"
+          :label="project.archLabel"
+          :secondary-label="project.id"
+          class="flex-grow-1"
         >
-          View Case Study
-        </v-btn>
-      </v-col>
-    </v-row>
-  </v-card>
+          <template #overlay>
+            <div class="pa-4 position-absolute top-0 left-0 w-100">
+              <v-chip color="primary" size="x-small" variant="flat" class="font-weight-black">
+                {{ project.commitCount }} COMMITS
+              </v-chip>
+            </div>
+          </template>
+        </image-placeholder>
+      </div>
+    </v-col>
+
+    <v-col cols="12" md="5" class="pa-md-12">
+      <div class="text-overline text-primary font-weight-bold mb-2 tracking-widest text-uppercase">
+        {{ project.category }}
+      </div>
+      <h3 class="text-h3 font-weight-black mb-4">{{ project.title }}</h3>
+      <p class="text-body-1 text-grey-darken-1 mb-6 leading-relaxed">
+        {{ project.description }}
+      </p>
+
+      <div class="d-flex flex-wrap ga-2 mb-8">
+        <v-chip
+          v-for="tag in project.tags.slice(0, 3)"
+          :key="tag"
+          variant="tonal"
+          size="small"
+          class="text-uppercase font-weight-bold"
+        >
+          {{ tag }}
+        </v-chip>
+      </div>
+
+      <v-btn 
+        :to="`/work/${project.id}`" 
+        variant="outlined" 
+        rounded="pill" 
+        class="px-8 font-weight-black"
+      >
+        View Case Study
+      </v-btn>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
-import type { Project } from '@/types/project';
-import browserMockup from './browserMockup.vue';
-
+// Clean script, no redundant interfaces
 defineProps<{
-  project: Project;
+  project: any;
   isEven: boolean;
 }>();
+
+defineEmits(['toggle']);
 </script>
 
 <style scoped>
-.visual-wrapper {
-  position: relative;
-  height: clamp(300px, 40vh, 480px); /* Responsive height clamp */
-  background: rgb(var(--v-theme-surface));
-  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+.media-container {
+  /* This prevents the placeholder from collapsing and crops 
+     excessively tall images to a cinematic 16:10 or 3:2 ratio */
+  height: 500px; 
+  min-height: 500px;
+  max-height: 600px;
+  width: 100%;
+  overflow: hidden;
 }
 
-.commit-badge {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background: rgba(var(--v-theme-background), 0.9);
-  backdrop-filter: blur(4px);
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-family: 'Fira Code', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  color: rgb(var(--v-theme-bodyText));
-  z-index: 5;
-  border: 1px solid rgba(var(--v-theme-primary), 0.2);
+/* Ensure the placeholder fills the entire 500px height */
+:deep(.technical-blueprint) {
+  height: 100% !important;
 }
 
-.tech-abstract {
-  height: 100%;
-  background: radial-gradient(circle at center, rgb(var(--v-theme-surface-variant)) 0%, rgb(var(--v-theme-background)) 100%);
-}
-
-.category-tag {
-  color: rgb(var(--v-theme-primary));
-  font-weight: 900; /* Maximize weight for 'Boutique' look */
-  font-size: 0.7rem;
-  letter-spacing: 0.2em; /* More space for that premium feel */
-  text-transform: uppercase;
-}
-
-.project-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: clamp(1.75rem, 4vw, 2.5rem); /* Better scaling */
-  line-height: 1.1;
-  /* Explicitly use bodyText to avoid fading in Light Mode */
-  color: rgb(var(--v-theme-bodyText));
-  text-transform: uppercase;
-}
-
-.visual-wrapper {
-  position: relative;
-  /* Match the height of your browser-content or set to auto */
-  height: auto; 
-  background: rgb(var(--v-theme-surface));
-  border-radius: 24px;
-  overflow: visible; /* Let the browser-mockup handle its own internal scrolling */
-}
-.project-description {
-  color: rgb(var(--v-theme-bodyTextSecondary));
-  line-height: 1.6;
-  font-size: 1.05rem;
-}
-
-.v-chip {
-  border: 1px solid rgba(var(--v-theme-primary), 0.2);
-}
-/* Mobile Alignment Fix */
 @media (max-width: 960px) {
-  .project-title {
-    font-size: 1.75rem;
+  .media-container {
+    height: 350px;
+    min-height: 350px;
   }
 }
 </style>
