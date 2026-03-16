@@ -1,20 +1,12 @@
 <template>
   <v-fade-transition>
-    <v-card
-      v-if="mounted"
-      class="editor-window mx-auto"
-      elevation="24"
-    >
-      <editor-tabs
-        :active-tab="activeTab"
-        @change="activeTab = $event"
-      />
+    <v-card v-if="mounted" class="editor-window mx-auto" elevation="24">
+      <editor-tabs :active-tab="activeTab" @change="activeTab = $event" />
 
       <v-sheet class="editor-body">
         <code-viewer
           :lines="activeFile.lines"
           :language="activeFile.language"
-          show-caret
         />
       </v-sheet>
 
@@ -42,15 +34,14 @@
 <script setup lang="ts">
 import { editorFiles } from '../../data/editorFileData'
 import CodeViewer from './codeViewer.vue'
-const mounted = ref(false)
-const activeTab = ref<'studio' | 'home'>('studio')
+import EditorTabs from './editorTabs.vue'
 
+const mounted = ref(false)
+const activeTab = ref('studio')
 const activeFile = computed(() => editorFiles[activeTab.value]!)
 
 onMounted(() => {
-  setTimeout(() => {
-    mounted.value = true
-  }, 150)
+  setTimeout(() => { mounted.value = true }, 150)
 })
 </script>
 
@@ -60,27 +51,16 @@ onMounted(() => {
   max-width: 900px;
   background: rgb(var(--v-theme-surface)) !important;
   border: 1px solid rgba(var(--v-theme-primary), 0.1);
-  border-radius: 16px !important;
+  border-radius: 12px !important;
   overflow: hidden;
-  /* Architectural depth */
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 
-              0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
 }
 
 .editor-body {
   background: rgb(var(--v-theme-codeBg)) !important;
   height: 400px; 
   overflow-y: auto;
-  overflow-x: hidden; /* Prevent horizontal breakages */
-}
-
-/* Custom scrollbar to keep the "Studio" feel */
-.editor-body::-webkit-scrollbar {
-  width: 6px;
-}
-.editor-body::-webkit-scrollbar-thumb {
-  background: rgba(var(--v-theme-primary), 0.15);
-  border-radius: 10px;
+  overflow-x: auto; /* Essential for mobile swiping of long lines */
 }
 
 .editor-status-bar {
@@ -90,15 +70,16 @@ onMounted(() => {
   font-size: 10px;
   color: rgb(var(--v-theme-bodyTextMuted));
   border-top: 1px solid rgba(255, 255, 255, 0.03);
-  user-select: none;
 }
 
 @media (max-width: 600px) {
   .editor-window {
+    /* Gives it a 12px margin on sides so it looks 'placed' */
+    width: calc(100% - 24px);
     margin-inline: 12px;
   }
   .editor-body {
-    height: 320px; /* Tighter for mobile viewports */
+    height: 340px;
   }
 }
 </style>

@@ -1,15 +1,17 @@
 <template>
-  <hero />
-  <stats-bar />
-  <expertise />
-  <featured-work />
+  <main class="page-wrapper">
+    <hero />
+    <stats-bar />
+    <expertise />
+    <featured-work />
+  </main>
 </template>
+
 <script setup lang="ts">
 useHead({
   script: [
     {
       type: 'application/ld+json',
-      // We use innerHTML here because 'children' isn't a recognized property in the Nuxt head type
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Person',
@@ -25,7 +27,13 @@ useHead({
   ]
 })
 </script>
+
 <style lang="css" scoped>
+/* Ensure the wrapper doesn't break the layout */
+.page-wrapper {
+  width: 100%;
+}
+
 /* Tighten the massive headlines */
 h1 {
   line-height: 0.95 !important;

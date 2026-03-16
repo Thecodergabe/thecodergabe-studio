@@ -41,12 +41,13 @@
               target="_blank" 
             />
             <v-btn 
-              icon="mdi-email-outline" 
               variant="text" 
-              size="small" 
-              color="grey-lighten-1" 
-              href="mailto:thecodergabe@outlook.com" 
-            />
+              to="/contact" 
+              prepend-icon="mdi-email-outline"
+              class="text-none"
+            >
+              Initialize Inquiry
+            </v-btn>
           </div>
         </v-col>
       </v-row>

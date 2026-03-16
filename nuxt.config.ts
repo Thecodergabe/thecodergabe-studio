@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
 
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: 'THECODERGABE STUDIO | Lead UI Architect',
       link: [
