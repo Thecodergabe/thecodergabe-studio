@@ -1,7 +1,7 @@
 import { editorFiles } from '~/data/editorFileData' 
 
 export default defineEventHandler(async (event) => {
-  const baseUrl = 'https://www.thecodergabe.com'
+  const baseUrl = 'https://thecodergabe.com'
   const staticRoutes = ['', '/work', '/about', '/inquiry']
   
   // Dynamically add work[id] routes

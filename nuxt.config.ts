@@ -3,12 +3,15 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   ssr: true,
   devtools: { enabled: false },
-
+  nitro: {
+    preset: 'cloudflare-pages'
+  },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: 'THECODERGABE STUDIO | Lead UI Architect',
       link: [
+        { rel: 'canonical', href: 'https://thecodergabe.com' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png?v=1' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png?v=1' },
