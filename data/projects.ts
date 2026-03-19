@@ -38,28 +38,33 @@ export const projects: Project[] = [
     category: 'Fintech / Data Systems',
     image: '/loan_preview.png',
     showBefore: false,
-    commitCount: 'Production',
+    commitCount: 'Production', // Locked for 2026 deployment
     icon: 'mdi-calculator-variant',
-    description: 'Precision mortgage forecasting engine that bypasses generic averages. Injects hyper-local property tax and insurance data scraped from national databases for ZIP-level accuracy.',
+    description: 'A high-fidelity mortgage forecasting engine engineered for 2026 market volatility. Bypasses generic national averages by injecting hyper-local property tax and insurance data curated via a custom ETL pipeline.',
     features: [
       {
-        title: 'Hyper-Local ETL',
-        icon: 'mdi-database-search',
-        text: 'Automated data scraping pipeline using Cheerio and Puppeteer to extract granular tax data from thousands of national government databases.'
+        title: 'Bespoke ETL Pipeline',
+        icon: 'mdi-database-import',
+        text: 'Automated extraction and normalization layer using Cheerio and XLSX to sync granular tax millage rates from thousands of municipal jurisdictions.'
       },
       {
-        title: 'ZIP-to-County Mapping',
-        icon: 'mdi-map-marker-path',
-        text: 'Complex data normalization layer correlating 40,000+ ZIP codes to specific county tax jurisdictions with zero-latency lookups.'
+        title: 'Agnostic Core Architecture',
+        icon: 'mdi-layers-triple',
+        text: 'Engineered in "Library Mode" to remain framework-agnostic, utilizing dependency injection for credential management and headless operation.'
+      },
+      {
+        title: 'Edge-Optimized Delivery',
+        icon: 'mdi-flash-outline',
+        text: 'Zero-latency ZIP-to-County mapping across 40,000+ regions with Brotli-compressed static assets for global Cloudflare Edge distribution.'
       }
     ],
     highlights: [
-      'Automated ETL Pipeline (Cheerio / XLSX / Puppeteer)',
-      'ZIP-to-County normalization for 40,000+ regions',
-      'Dependency-free, server-side PDF generation engine',
-      'Real-time reactive financial modeling'
+      'Custom ETL Pipeline (Cheerio / Node / XLSX)',
+      'Agnostic NPM-ready financial logic core',
+      'Hyper-local tax mapping for 40,000+ ZIP codes',
+      'Client-side PDF generation & reactive modeling'
     ],
-    tags: ['Nuxt 3', 'Data Scraping', 'Fintech'],
+    tags: ['Nuxt 3', 'TypeScript', 'Cloudflare', 'Fintech'],
     url: 'https://www.loanestimatetool.com/',
     featured: true
   },
