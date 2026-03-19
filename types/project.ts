@@ -12,5 +12,12 @@ export interface Project {
   url: string;
   icon?: string;
   featured: boolean;
+  features: ProjectFeature[];
   archLabel?: string; // Adding this fixes the TS error
+}
+
+interface ProjectFeature {
+  title: string;
+  icon: string;
+  text: string;
 }

@@ -17,7 +17,7 @@ useHead({
         '@type': 'Person',
         'name': 'TheCoderGabe',
         'jobTitle': 'Lead UI Architect',
-        'url': 'https://thecodergabe.studio',
+        'url': 'https://thecodergabe.com',
         'sameAs': [
           'https://github.com/thecodergabe',
           'https://linkedin.com/in/thecodergabe'

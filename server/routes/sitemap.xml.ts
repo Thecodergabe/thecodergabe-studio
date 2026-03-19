@@ -1,11 +1,10 @@
-import { editorFiles } from '~/data/editorFileData' 
+import { projects } from '~/data/projects' 
 
 export default defineEventHandler(async (event) => {
   const baseUrl = 'https://thecodergabe.com'
   const staticRoutes = ['', '/work', '/about', '/inquiry']
   
-  // Dynamically add work[id] routes
-  const projectRoutes = Object.keys(editorFiles).map(id => `/work/${id}`)
+  const projectRoutes = projects.map(p => `/work/${p.id}`)
   const allRoutes = [...staticRoutes, ...projectRoutes]
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -14,13 +13,13 @@ export default defineEventHandler(async (event) => {
         .map(route => `
           <url>
             <loc>${baseUrl}${route}</loc>
-            <lastmod>${new Date().toISOString()}</lastmod>
+            <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
             <changefreq>${route === '' ? 'daily' : 'monthly'}</changefreq>
             <priority>${route === '' ? '1.0' : '0.8'}</priority>
           </url>
         `)
         .join('')}
-    </urlset>`
+    </urlset>`.replace(/>\s+</g, '><')
 
   setHeader(event, 'Content-Type', 'application/xml')
   return sitemap
