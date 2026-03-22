@@ -42,7 +42,7 @@
             />
             <v-btn 
               variant="text" 
-              to="/contact" 
+              to="/inquiry" 
               prepend-icon="mdi-email-outline"
               class="text-none"
             >

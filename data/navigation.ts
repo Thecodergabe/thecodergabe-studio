@@ -4,5 +4,5 @@ export const navItems: NavItem[] = [
   { title: 'Home', path: '/' },
   { title: 'Work', path: '/work' },
   { title: 'About', path: '/about' },
-  { title: 'Inquiry', path: '/contact' }
+  { title: 'Inquiry', path: '/inquiry' }
 ];

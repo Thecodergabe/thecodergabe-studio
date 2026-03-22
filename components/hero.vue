@@ -21,7 +21,7 @@
           size="large" 
           rounded="pill" 
           class="px-10 font-weight-black shadow-primary"
-          @click="$router.push('/contact')"
+          @click="$router.push('/inquiry')"
         >
           START A CONSULTATION <v-icon end>mdi-arrow-right</v-icon>
         </v-btn>
