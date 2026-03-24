@@ -5,7 +5,6 @@
       <v-col cols="12"
              lg="10">
 
-        <!-- Header Section -->
         <header class="mb-10">
           <v-btn to="/work"
                  variant="text"
@@ -22,22 +21,30 @@
         <v-row>
           <v-col cols="12"
                  md="8">
-            <!-- Hero Image/Placeholder -->
-            <v-card variant="outlined"
-                    class="rounded-xl mb-12 overflow-hidden border-thin bg-surface"
-                    flat>
-              <v-img v-if="project.image"
-                     :src="project.image"
-                     height="500"
-                     cover />
-              <image-placeholder v-else
-                                 height="400"
-                                 :icon="project.icon || 'mdi-layers-outline'"
-                                 :label="project.category"
-                                 :secondary-label="project.id" />
-            </v-card>
+            
+            <section class="mb-12">
+              <browser-mockup
+                v-if="project.image"
+                :image="project.image"
+                :image-before="project.imageBefore"
+                :url="project.url"
+                :show-before="isShowingBefore"
+                class="h-100"
+                @toggle="toggleView"
+              />
+              
+              <v-card v-else
+                      variant="outlined"
+                      class="rounded-xl mb-12 overflow-hidden border-thin bg-surface"
+                      flat>
+                <image-placeholder 
+                  height="400"
+                  :icon="project.icon || 'mdi-layers-outline'"
+                  :label="project.category"
+                  :secondary-label="project.id" />
+              </v-card>
+            </section>
 
-            <!-- Technical Overhaul Section -->
             <section class="mb-12">
               <h2 class="text-h4 font-weight-black mb-6">The Technical Overhaul</h2>
               <p class="text-body-1 text-bodyTextSecondary mb-8 leading-relaxed">
@@ -64,7 +71,6 @@
               </v-row>
             </section>
 
-            <!-- Key Contributions -->
             <section class="mb-12">
               <h2 class="text-h5 font-weight-black mb-6">Key Contributions</h2>
               <div v-for="(item, i) in project.highlights"
@@ -77,7 +83,6 @@
             </section>
           </v-col>
 
-          <!-- Sidebar Metrics -->
           <v-col cols="12"
                  md="4">
             <v-card variant="outlined"
@@ -124,14 +129,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { projects } from '../../data/projects';
 
 const route = useRoute();
 const project = computed(() => projects.find(p => p.id === route.params.id));
 
+/**
+ * State Management for Before/After Toggle
+ * The mockup intentionally does not manage its own state to keep it reusable.
+ * Here we handle the reactive swap between Modern and Legacy views.
+ */
+const isShowingBefore = ref(false);
+
+const toggleView = () => {
+  isShowingBefore.value = !isShowingBefore.value;
+};
+
 // SEO Injection: This is what makes Google love these dynamic pages
+// Restored metadata tracking for 2026 deployment
 useHead({
   title: project.value ? `${project.value.title} | TheCoderGabe Studio` : 'Project',
   meta: [
@@ -148,3 +165,14 @@ useHead({
   ]
 });
 </script>
+
+<style scoped>
+.sticky-top {
+  position: sticky;
+  top: 100px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+</style>

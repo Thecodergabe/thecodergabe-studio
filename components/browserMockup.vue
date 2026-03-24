@@ -6,7 +6,7 @@
         <div class="dot yellow" />
         <div class="dot green" />
       </div>
-      <div class="browser-address flex-grow-1 text-center py-1 rounded text-uppercase">
+      <div class="browser-address flex-grow-1 text-center py-1 rounded text-uppercase px-4">
         {{ url }}
       </div>
     </div>
@@ -14,48 +14,58 @@
     <div class="viewport custom-scroll">
       <div v-if="imageBefore" class="toggle-zone">
         <v-btn
+          :loading="isImageLoading"
           rounded="pill"
           size="small"
           elevation="8"
           class="switch-pill font-weight-black"
-          @click="$emit('toggle')"
+          @click="handleToggle"
         >
           {{ showBefore ? 'SHOW MODERN' : 'SHOW LEGACY' }}
         </v-btn>
       </div>
 
-      <nuxt-img 
-        :src="showBefore ? imageBefore : image" 
-        :alt="alt || 'Project screenshot'"
-        class="project-img"
-        :class="{ 'legacy-filter': showBefore }"
-        loading="lazy"
-        width="1200"
-        densities="x1 x2"
-        format="webp"
-        quality="90"
-      />
+      <div class="image-stack">
+        <nuxt-img 
+          ref="modernImg"
+          :src="image" 
+          :alt="alt || 'Modern Project screenshot'"
+          class="project-img modern-layer"
+          :class="{ 'fade-out': showBefore }"
+          loading="lazy"
+          width="1200"
+          format="webp"
+          quality="90"
+          @load="checkLoadingState"
+        />
+
+        <nuxt-img 
+          v-if="imageBefore"
+          ref="legacyImg"
+          :src="imageBefore" 
+          :alt="alt || 'Legacy Project screenshot'"
+          class="project-img legacy-layer"
+          :class="{ 'fade-in': showBefore }"
+          loading="lazy"
+          width="1200"
+          format="webp"
+          quality="90"
+          @load="checkLoadingState"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, watch } from 'vue'
+
 /**
  * BrowserMockup Component
  *
  * This component renders a stylized browser frame used to showcase
  * project screenshots. It supports an optional "before/after" mode
  * where legacy and modern versions of a UI can be toggled.
- *
- * Props:
- * - image: primary (modern) screenshot
- * - imageBefore: optional legacy screenshot for comparison
- * - url: displayed in the mock browser address bar
- * - showBefore: determines which image is currently visible
- * - alt: accessible description for the screenshot
- *
- * The toggle event is emitted upward so the parent component
- * controls the state — keeping this component stateless and reusable.
  */
 const props = withDefaults(
   defineProps<{
@@ -70,12 +80,37 @@ const props = withDefaults(
   }
 )
 
+const emit = defineEmits(['toggle'])
+
+const isImageLoading = ref(false)
+const modernImg = ref<any>(null)
+const legacyImg = ref<any>(null)
+
 /**
- * Emits:
- * - toggle: triggers a before/after swap in the parent component.
- *   The mockup intentionally does not manage its own state.
+ * Checks if the currently active image layer is actually loaded.
  */
-defineEmits(['toggle'])
+const checkLoadingState = () => {
+  const target = props.showBefore ? legacyImg.value?.$el : modernImg.value?.$el
+  if (target && target.complete) {
+    isImageLoading.value = false
+  }
+}
+
+const handleToggle = () => {
+  const target = !props.showBefore ? legacyImg.value?.$el : modernImg.value?.$el
+  if (target && !target.complete) {
+    isImageLoading.value = true
+  }
+  emit('toggle')
+}
+
+watch(() => props.showBefore, () => {
+  checkLoadingState()
+})
+
+onMounted(() => {
+  checkLoadingState()
+})
 </script>
 
 <style scoped>
@@ -102,30 +137,54 @@ defineEmits(['toggle'])
   font-family: 'Fira Code', monospace; 
   font-size: 10px; 
   letter-spacing: 0.1em;
+  
+  /* ELLIPSES & SPACING FIX */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; /* Ensures it respects the flex-grow container */
 }
 
 .viewport {
   position: relative;
-  /* Increased height for better visibility of long-form content */
   height: 600px;
   overflow-y: auto;
   overflow-x: hidden;
   background: rgb(var(--v-theme-background));
-  /* Smooth scroll for a more premium feel */
   scroll-behavior: smooth;
+}
+
+.image-stack {
+  position: relative;
+  width: 100%;
 }
 
 .project-img {
   width: 100%;
   height: auto;
   display: block;
-  /* Longer transition for a more 'cinematic' swap between legacy/modern */
-  transition: filter 0.8s ease-in-out;
+  transition: opacity 0.4s ease-in-out, filter 0.6s ease-in-out;
 }
 
-.legacy-filter {
-  /* Heavier desaturation as seen in studio previews */
+.modern-layer {
+  opacity: 1;
+}
+.modern-layer.fade-out {
+  opacity: 0;
+}
+
+.legacy-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
   filter: grayscale(1) contrast(1.1) brightness(0.7);
+}
+
+.legacy-layer.fade-in {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .toggle-zone {
@@ -152,7 +211,6 @@ defineEmits(['toggle'])
 .yellow { background: #ffbd2e; } 
 .green { background: #27c93f; }
 
-/* Custom Scrollbar: Sleeker for long-scroll content */
 .custom-scroll::-webkit-scrollbar { width: 6px; }
 .custom-scroll::-webkit-scrollbar-thumb { 
   background: rgba(var(--v-theme-primary), 0.2); 

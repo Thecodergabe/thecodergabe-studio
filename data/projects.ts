@@ -74,7 +74,7 @@ export const projects: Project[] = [
     category: 'E-Commerce / Performance',
     image: '/retail_after.png',
     imageBefore: '/retail_before.png',
-    showBefore: false,
+    showBefore: true,
     commitCount: 'Enterprise',
     icon: 'mdi-cart-outline',
     description: 'Led the architectural migration of a national tire retail platform to Vue 3. Focused on core performance metrics, SEO discoverability, and component modularity.',
@@ -96,7 +96,7 @@ export const projects: Project[] = [
       'Type-safe backend integration via Microsoft Kiota',
       'Micro-frontend component strategy'
     ],
-    tags: ['Nuxt 3', 'TypeScript', 'Performance'],
+    tags: ['Vue 3', 'TypeScript', 'Performance'],
     url: 'https://www.pointstire.com/everettstreet/tire-listing?front=185/65R15&make=Kia&year=2021&model=Rio&trim=15,%20LX',
     featured: false
   },
