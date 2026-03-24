@@ -52,7 +52,28 @@
 </template>
 
 <script setup lang="ts">
-  import { experienceData } from '@/data/experience';
+import { experienceData } from '@/data/experience'
+
+/**
+ * ExperienceTimeline Component
+ *
+ * Renders a vertical timeline of professional roles, highlighting
+ * progression, responsibilities, and the technologies used at each stage.
+ *
+ * The data is sourced from a centralized module (`experienceData`),
+ * keeping the component purely presentational and easy to maintain.
+ *
+ * Responsive behavior:
+ * - On mobile, years shift into the main content block for readability.
+ * - On desktop, years appear in the opposite slot for a clean left/right layout.
+ *
+ * Each timeline entry includes:
+ *  - year: chronological anchor
+ *  - title: role or position
+ *  - company: organization name
+ *  - description: summary of responsibilities or impact
+ *  - tech: supporting technologies rendered as chips
+ */
 </script>
 
 <style scoped>

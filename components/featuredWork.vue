@@ -31,11 +31,15 @@
 import { projects } from '@/data/projects'
 
 /**
- * Featured Projects Logic
- * Filters the central data store for 'featured' flags.
- * Limit set to 2 for the homepage bento/alternating layout.
+ * Featured Projects:
+ * Pulls from the central project registry and returns only those
+ * explicitly marked as `featured`. This keeps the homepage curated
+ * and ensures the alternating layout stays visually balanced.
+ *
+ * The homepage intentionally limits the output to a small set,
+ * but the filtering logic remains generic for future expansion.
  */
-const featuredProjects = computed(() => 
+const featuredProjects = computed(() =>
   projects.filter(p => p.featured)
 )
 </script>
@@ -44,7 +48,6 @@ const featuredProjects = computed(() =>
 .uppercase-title {
   text-transform: uppercase;
   letter-spacing: 2px;
-  /* Ensuring the header matches the "Selected Works" weight from the index */
   line-height: 1.2;
 }
 

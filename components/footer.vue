@@ -58,7 +58,8 @@
 <script setup lang="ts">
 /**
  * Footer Component
- * Static year used for architectural consistency in Studio 2026.
+ * - Provides a clear and concise status indicator for project availability, using a pulsing dot for visual emphasis.
+ * - Displays essential copyright information in a subdued style to maintain focus on the status and contact options
  */
 </script>
 

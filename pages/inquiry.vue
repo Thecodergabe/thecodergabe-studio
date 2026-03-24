@@ -1,5 +1,5 @@
 <template>
-  <v-container class="py-10 px-4 inquiry-container d-flex align-center h-md-100">
+  <v-container class="py-10 px-4 inquiry-container d-flex align-center">
     <v-row justify="center" align="center" no-gutters>
       <v-col cols="12" lg="10" xl="8">
         <v-row class="align-center">
@@ -12,21 +12,21 @@
               Currently available for high-impact UI/UX migrations and bespoke engineering.
             </p>
             
-            <div class="d-flex flex-column ga-4">
-              <div 
+            <ul class="d-flex flex-column ga-4">
+              <li 
                 v-for="skill in contactHighlights" 
                 :key="skill.title" 
                 class="d-flex align-center ga-3"
               >
                 <v-avatar color="primary" variant="tonal" size="32" rounded="lg">
-                  <v-icon :icon="skill.icon" size="16" />
+                  <v-icon :icon="skill.icon" size="16" aria-hidden="true" />
                 </v-avatar>
                 <div>
                   <div class="text-caption font-weight-bold text-uppercase">{{ skill.title }}</div>
                   <div class="text-caption text-grey">{{ skill.desc }}</div>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </v-col>
 
           <v-col cols="12" md="7" class="d-flex justify-md-end">
@@ -47,7 +47,6 @@
 
 <script setup lang="ts">
   import { contactHighlights } from '@/data/contactHighlights'
-  import inquiryForm from '../components/inquiryForm.vue'
 </script>
 
 <style scoped>

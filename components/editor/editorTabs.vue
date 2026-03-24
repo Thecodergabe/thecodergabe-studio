@@ -28,8 +28,32 @@
 
 <script setup lang="ts">
 import { editorFiles } from '../../data/editorFileData'
+
+/**
+ * Props:
+ * - activeTab: the currently selected file key
+ *
+ * The parent component owns the state so this tab bar remains
+ * stateless and reusable across different editor configurations.
+ */
 defineProps<{ activeTab: string }>()
+
+/**
+ * Emits:
+ * - change: fired when the user selects a different tab
+ *
+ * The parent listens for this event and updates `activeTab`,
+ * keeping the tab bar fully controlled from above.
+ */
 defineEmits(['change'])
+
+/**
+ * Converts the editorFiles object into an iterable array of:
+ *   [key, file]
+ *
+ * This makes it easy to loop through tabs while preserving
+ * the original file identifiers used by the editor.
+ */
 const files = Object.entries(editorFiles)
 </script>
 

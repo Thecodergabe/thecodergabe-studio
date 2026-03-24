@@ -1,14 +1,14 @@
 <template>
   <v-card variant="flat" class="bg-transparent overflow-hidden">
     <v-fade-transition hide-on-leave>
-      <div v-if="isSuccess" class="text-center py-8">
+      <div v-if="isSuccess" class="text-center py-8" aria-live="polite">
         <v-icon icon="mdi-check-circle-outline" color="primary" size="64" class="mb-4" />
         <h2 class="text-h5 font-weight-bold mb-2 text-uppercase tracking-tighter">Transmission Successful</h2>
         <p class="text-caption text-grey-darken-1 mb-6 px-4">Project brief received. Reviewing now.</p>
         <v-btn variant="outlined" color="primary" rounded="xl" @click="resetForm">Send Another</v-btn>
       </div>
 
-      <v-form v-else ref="formRef" class="pa-0" @submit.prevent="handleSubmit">
+      <v-form v-else ref="formRef" class="pa-0" @submit.prevent="handleSubmit" autocomplete="off" novalidate>
         <div class="v-hidden-field">
           <input 
             v-model="form.honey" 
@@ -16,6 +16,7 @@
             name="verification_code" 
             tabindex="-1" 
             autocomplete="off"
+            aria-hidden="true" 
           >
         </div>
 
@@ -29,7 +30,7 @@
           </v-chip-group>
         </div>
 
-        <v-row dense>
+        <v-row density="comfortable">
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="form.name"
@@ -93,68 +94,119 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @file components/inquiryForm.vue
+ * @description High‑integrity inquiry form with bot‑detection,
+ * Vuetify validation, and async submission via useInquiry().
+ */
+
 import { useTheme } from 'vuetify'
 import { useInquiry } from '@/composables/useInquiry'
 import { projectTypes } from '@/data/projectTypes'
 
+/**
+ * Type for Vuetify's v-form instance.
+ * Ensures validate() and reset() are properly typed.
+ */
 interface VFormInstance {
-  validate: () => Promise<{ valid: boolean }>;
-  reset: () => void;
+  validate: () => Promise<{ valid: boolean }>
+  reset: () => void
 }
 
+/**
+ * Theme‑aware input background color.
+ * Keeps fields readable in both light and dark mode.
+ */
 const theme = useTheme()
 const isDark = computed(() => theme.global.name.value === 'dark')
-const inputBg = computed(() => isDark.value ? 'grey-darken-4' : 'grey-lighten-4')
+const inputBg = computed(() =>
+  isDark.value ? 'grey-darken-4' : 'grey-lighten-4'
+)
 
+/**
+ * Inquiry composable:
+ * - sendInquiry(): async submission handler
+ * - isSubmitting: loading state
+ * - isSuccess: toggles success UI
+ */
 const { sendInquiry, isSubmitting, isSuccess } = useInquiry()
+
+/**
+ * Reference to the Vuetify form instance.
+ */
 const formRef = ref<VFormInstance | null>(null)
 
-// Added 'honey' to reactive state
+/**
+ * Reactive form model.
+ * Includes a honeypot field ("honey") for bot detection.
+ */
 const form = reactive({
   name: '',
   email: '',
   projectType: 'vue-specialty',
   message: '',
-  honey: '' 
+  honey: '' // hidden field — bots fill this, humans don't
 })
 
-// Track when the form was loaded to catch "instant" bot submissions
+/**
+ * Timestamp when the form was mounted.
+ * Used to detect "too fast" submissions from bots.
+ */
 const mountTime = Date.now()
 
+/**
+ * Email validation rules.
+ */
 const emailRules = [
   (v: string) => !!v || 'Communication path required',
   (v: string) => /.+@.+\..+/.test(v) || 'Invalid format'
 ]
 
+/**
+ * Main submit handler.
+ * Includes:
+ * 1. Honeypot check
+ * 2. Submission speed check
+ * 3. Vuetify validation
+ * 4. Inquiry submission
+ */
 const handleSubmit = async () => {
   if (!formRef.value) return
 
-  // 1. Check Honeypot: If filled, it's a bot
+  // Honeypot: bots fill hidden fields, humans don't
   if (form.honey) {
     console.warn('Bot detected via Honeypot.')
-    return 
+    return
   }
 
-  // 2. Check Submission Speed: If < 3s, it's likely a script
+  // Submission speed: humans don't submit forms in < 3 seconds
   if (Date.now() - mountTime < 3000) {
     console.warn('Submission too fast (Potential Bot).')
     return
   }
-  
+
+  // Validate visible fields
   const { valid } = await formRef.value.validate()
-  
-  if (valid) {
-    const readableType = projectTypes.find(t => t.id === form.projectType)?.name || form.projectType
-    
-    await sendInquiry({
-      name: form.name,
-      email: form.email,
-      projectType: readableType,
-      message: form.message
-    })
-  }
+  if (!valid) return
+
+  // Convert projectType ID → readable label
+  const readableType =
+    projectTypes.find(t => t.id === form.projectType)?.name ||
+    form.projectType
+
+  // Submit inquiry
+  await sendInquiry({
+    name: form.name,
+    email: form.email,
+    projectType: readableType,
+    message: form.message
+  })
 }
 
+/**
+ * Resets the form after a successful submission.
+ * Clears all fields and resets validation state.
+ */
 const resetForm = () => {
   isSuccess.value = false
   form.name = ''

@@ -42,7 +42,9 @@
 <script setup lang="ts">
 /**
  * Hero Component 
- * Clean script logic per Studio architecture guidelines.
+ * - Combines a bold typographic statement with a compelling description and a call-to-action button.
+ * - The right column features a stylized image with a subtle 3D effect that responds to hover interactions.
+ * - Designed to be fully responsive, with mobile-specific adjustments for typography and layout.
  */
 </script>
 

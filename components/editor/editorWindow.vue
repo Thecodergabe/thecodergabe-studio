@@ -36,12 +36,39 @@ import { editorFiles } from '../../data/editorFileData'
 import CodeViewer from './codeViewer.vue'
 import EditorTabs from './editorTabs.vue'
 
+/**
+ * Controls the fade‑in animation of the editor window.
+ * The slight delay creates a smoother entrance when the section
+ * scrolls into view, giving the UI a more polished feel.
+ */
 const mounted = ref(false)
+
+/**
+ * Active tab identifier.
+ * Tabs map directly to keys inside `editorFiles`, allowing the
+ * component to swap between different code samples instantly.
+ */
 const activeTab = ref('studio')
+
+/**
+ * Returns the file object associated with the current tab.
+ * Each file contains:
+ *  - lines: array of code lines
+ *  - language: syntax mode for the viewer
+ *
+ * The non-null assertion is safe because tabs are controlled.
+ */
 const activeFile = computed(() => editorFiles[activeTab.value]!)
 
+/**
+ * Delayed mount:
+ * Adds a small pause before showing the editor so the fade transition
+ * feels intentional rather than abrupt.
+ */
 onMounted(() => {
-  setTimeout(() => { mounted.value = true }, 150)
+  setTimeout(() => {
+    mounted.value = true
+  }, 150)
 })
 </script>
 

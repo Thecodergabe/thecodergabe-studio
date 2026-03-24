@@ -93,11 +93,24 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @file pages/about.vue
+ * @description About page showcasing personal/studio identity,
+ * experience metrics, and architectural philosophy.
+ *
+ * This page is intentionally lightweight — all content is static,
+ * and no reactive logic is required beyond the stats object.
+ */
+
+/**
+ * Display metrics used throughout the hero section.
+ * These are static values representing experience and output.
+ */
 const stats = {
   commits: '8K+',
   components: '1.5K+',
   experience: '6+'
-};
+}
 </script>
 
 <style scoped>

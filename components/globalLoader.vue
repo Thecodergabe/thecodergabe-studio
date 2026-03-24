@@ -16,10 +16,18 @@
 </template>
 
 <script setup lang="ts">
-// Nuxt 3 built-in loading state hook
+/**
+ * Nuxt 3 loading indicator:
+ * Exposes:
+ *  - progress: a reactive number (0–100)
+ *  - isLoading: boolean indicating active navigation or async work
+ *
+ * The throttle prevents flicker on fast loads.
+ * The duration provides a smooth fill animation when progress is unknown.
+ */
 const { progress, isLoading } = useLoadingIndicator({
-  throttle: 200, // Only show if loading takes longer than 200ms
-  duration: 2000, // Estimated time to fill if progress is unknown
+  throttle: 200,   // Only show if loading lasts longer than 200ms
+  duration: 2000,  // Estimated fill time for indeterminate progress
 })
 </script>
 

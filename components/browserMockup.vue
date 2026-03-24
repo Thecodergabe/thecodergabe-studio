@@ -40,20 +40,42 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * BrowserMockup Component
+ *
+ * This component renders a stylized browser frame used to showcase
+ * project screenshots. It supports an optional "before/after" mode
+ * where legacy and modern versions of a UI can be toggled.
+ *
+ * Props:
+ * - image: primary (modern) screenshot
+ * - imageBefore: optional legacy screenshot for comparison
+ * - url: displayed in the mock browser address bar
+ * - showBefore: determines which image is currently visible
+ * - alt: accessible description for the screenshot
+ *
+ * The toggle event is emitted upward so the parent component
+ * controls the state — keeping this component stateless and reusable.
+ */
 const props = withDefaults(
   defineProps<{
-    image: string;
-    imageBefore?: string;
-    url: string;
-    showBefore: boolean;
-    alt?: string;
+    image: string
+    imageBefore?: string
+    url: string
+    showBefore: boolean
+    alt?: string
   }>(),
   {
     alt: 'Project Showcase'
   }
-);
+)
 
-defineEmits(['toggle']);
+/**
+ * Emits:
+ * - toggle: triggers a before/after swap in the parent component.
+ *   The mockup intentionally does not manage its own state.
+ */
+defineEmits(['toggle'])
 </script>
 
 <style scoped>

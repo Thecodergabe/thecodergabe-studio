@@ -65,29 +65,62 @@
 import { useTheme } from 'vuetify'
 import { navItems } from '@/data/navigation'
 
+/**
+ * Vuetify theme controller.
+ * Used to read the current theme and toggle between studioLight/studioDark.
+ */
 const theme = useTheme()
+
+/**
+ * Mobile navigation state:
+ * - sheet: controls the bottom sheet visibility
+ * - animateLinks: triggers staggered link animation after sheet opens
+ */
 const sheet = ref(false)
 const animateLinks = ref(false)
+
+/**
+ * Navigation items imported from a central config.
+ * Keeps the header declarative and easy to maintain.
+ */
 const menuItems = navItems
 
+/**
+ * Reactive theme mode.
+ * Vuetify exposes `.dark` on the current theme object.
+ */
 const isDark = computed(() => theme.global.current.value.dark)
 
+/**
+ * Toggles between the two custom themes.
+ * This updates Vuetify's global theme name.
+ */
 const handleThemeToggle = () => {
-  theme.global.name.value = isDark.value ? 'studioLight' : 'studioDark'
+  theme.change(isDark.value ? 'studioLight' : 'studioDark')
 }
 
+/**
+ * Opens the mobile navigation sheet.
+ * Uses requestAnimationFrame + small delay to ensure
+ * the CSS transitions fire cleanly on the next paint cycle.
+ */
 const openSheet = () => {
   sheet.value = true
-  // requestAnimationFrame ensures the browser is ready for the next paint
+
   requestAnimationFrame(() => {
     setTimeout(() => {
       animateLinks.value = true
-    }, 50) 
+    }, 50)
   })
 }
 
+/**
+ * Closes the mobile sheet.
+ * Delay matches the exit animation duration for smooth UX.
+ */
 const closeSheet = () => {
   animateLinks.value = false
+
   setTimeout(() => {
     sheet.value = false
   }, 350)
@@ -95,7 +128,6 @@ const closeSheet = () => {
 </script>
 
 <style scoped>
-/* --- 1. Desktop & Global Header --- */
 .studio-header {
   background: rgba(var(--v-theme-background), 0.8) !important;
   backdrop-filter: blur(20px);
@@ -119,7 +151,6 @@ const closeSheet = () => {
 .nav-divider { width: 1px; height: 16px; background: rgba(var(--v-theme-primary), 0.15); }
 .theme-toggle-btn, .mobile-btn { color: rgb(var(--v-theme-primary)) !important; }
 
-/* --- 2. Mobile Nav - Animation Logic --- */
 .mobile-sheet-card { background: rgb(var(--v-theme-background)) !important; }
 
 .mobile-nav-link, 
@@ -139,7 +170,6 @@ const closeSheet = () => {
   transform: translateY(0);
 }
 
-/* --- 3. Mobile Nav - Specific Styling --- */
 .mobile-nav-link {
   font-size: 2.8rem;
   font-weight: 900;

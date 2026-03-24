@@ -8,17 +8,28 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @file pages/index.vue
+ * @description Landing page composed of four hero-level sections.
+ * This script only handles SEO metadata and structured data injection.
+ */
+
 useHead({
+  /**
+   * Inject structured data for SEO.
+   * This describes you as a "Person" entity for search engines,
+   * improving knowledge panel accuracy and author attribution.
+   */
   script: [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Person',
-        'name': 'TheCoderGabe',
-        'jobTitle': 'Lead UI Architect',
-        'url': 'https://thecodergabe.com',
-        'sameAs': [
+        name: 'TheCoderGabe',
+        jobTitle: 'Lead UI Architect',
+        url: 'https://thecodergabe.com',
+        sameAs: [
           'https://github.com/thecodergabe',
           'https://linkedin.com/in/thecodergabe'
         ]

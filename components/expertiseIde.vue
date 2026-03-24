@@ -37,8 +37,16 @@
 
 <script setup lang="ts">
 /**
- * ExpertiseIde Component
- * Refined stack: Vue/Nuxt 3, Vuetify, Bootstrap, Pinia, Vuex.
+ * ExpertiseIDE Component
+ *
+ * This component renders a stylized “IDE window” used to showcase
+ * technical expertise in a visually familiar developer environment.
+ *
+ * The content inside the <pre><code> block is intentionally static:
+ * it acts as a decorative code snippet rather than executable logic.
+ *
+ * No props or reactive state are required — the component is purely
+ * presentational and relies on scoped CSS for syntax highlighting.
  */
 </script>
 

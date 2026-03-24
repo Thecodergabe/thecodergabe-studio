@@ -35,7 +35,10 @@
 <script setup lang="ts">
 /**
  * Expertise Component
- * Merges the static skills list with the interactive Editor Window.
+ * - Combines a descriptive list of core skills with a visually engaging "IDE window" that serves as a metaphor for the technical expertise offered.
+ * - The left column uses Vuetify's list components to clearly present key areas of expertise, while the right column features a custom-designed code snippet styled to resemble a developer's IDE.
+ * - The component is designed to be fully responsive, with adjustments for mobile layouts that maintain readability and visual interest.
+ * - The static code snippet inside the IDE window is purely decorative, showcasing relevant technologies and patterns without any dynamic behavior.
  */
 const skills = [
   { 

@@ -15,9 +15,35 @@
 
 <script setup lang="ts">
 import { useSyntaxHighlight } from '@/composables/useSyntaxHighlight'
+
+/**
+ * Props:
+ * - lines: raw source code split into individual lines
+ * - language: the syntax mode used by the tokenizer
+ *
+ * The component intentionally receives pre‑split lines so the parent
+ * controls formatting and avoids unnecessary string manipulation here.
+ */
 const props = defineProps<{ lines: string[], language: string }>()
+
+/**
+ * Syntax highlighting composable:
+ * Provides a tokenizer that converts raw text into structured tokens.
+ * Each token includes:
+ *  - text: the literal substring
+ *  - type: semantic category (keyword, string, comment, etc.)
+ */
 const { tokenizeLines } = useSyntaxHighlight()
-const tokenizedLines = computed(() => tokenizeLines(props.lines, props.language))
+
+/**
+ * Tokenized output:
+ * Converts each line into an array of tokens.
+ * This computed value updates reactively whenever the input changes,
+ * keeping the viewer fully declarative and stateless.
+ */
+const tokenizedLines = computed(() =>
+  tokenizeLines(props.lines, props.language)
+)
 </script>
 
 <style scoped>
